@@ -18,7 +18,6 @@ public class ConsumerRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        // Exemplo de consulta de endereco
         String cep = "01001000";
         System.out.println("=== Consultando endereco para CEP: " + cep + " ===");
         ConsultarEnderecoResponse enderecoResponse = soapClient.consultarEndereco(cep);
@@ -27,7 +26,6 @@ public class ConsumerRunner implements CommandLineRunner {
         System.out.println("Cidade: " + enderecoResponse.getCidade());
         System.out.println("UF: " + enderecoResponse.getUf());
 
-        // Exemplo de calculo de frete
         String cepOrigem = "01001000";
         String cepDestino = "20040010";
         BigDecimal peso = new BigDecimal("2.5");

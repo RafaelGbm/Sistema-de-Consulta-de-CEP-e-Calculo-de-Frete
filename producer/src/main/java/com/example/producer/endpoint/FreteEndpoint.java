@@ -17,7 +17,6 @@ public class FreteEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "calcularFreteRequest")
     @ResponsePayload
     public CalcularFreteResponse calcularFrete(@RequestPayload CalcularFreteRequest request) {
-        // Exemplo de cálculo de frete e validação
         CalcularFreteResponse response = new CalcularFreteResponse();
         String cepOrigem = request.getCepOrigem();
         String cepDestino = request.getCepDestino();

@@ -15,7 +15,6 @@ public class EnderecoEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "consultarEnderecoRequest")
     @ResponsePayload
     public ConsultarEnderecoResponse consultarEndereco(@RequestPayload ConsultarEnderecoRequest request) {
-        // Exemplo de validação de CEP e resposta
         ConsultarEnderecoResponse response = new ConsultarEnderecoResponse();
         String cep = request.getCep();
         if (cep == null || !cep.matches("\\d{8}")) {
