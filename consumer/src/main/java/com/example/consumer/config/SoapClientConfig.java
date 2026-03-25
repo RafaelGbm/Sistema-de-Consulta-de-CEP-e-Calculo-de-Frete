@@ -1,10 +1,11 @@
 package com.example.consumer.config;
 
-import com.example.consumer.SoapClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.client.core.WebServiceTemplate;
+
+import com.example.consumer.SoapClient;
 
 @Configuration
 public class SoapClientConfig {
@@ -28,7 +29,7 @@ public class SoapClientConfig {
         WebServiceTemplate template = new WebServiceTemplate();
         template.setMarshaller(enderecoMarshaller);
         template.setUnmarshaller(enderecoMarshaller);
-        template.setDefaultUri("http://localhost:9090/ws");
+        template.setDefaultUri("http://localhost:9191/ws");
         return template;
     }
 
@@ -37,7 +38,7 @@ public class SoapClientConfig {
         WebServiceTemplate template = new WebServiceTemplate();
         template.setMarshaller(freteMarshaller);
         template.setUnmarshaller(freteMarshaller);
-        template.setDefaultUri("http://localhost:9090/ws");
+        template.setDefaultUri("http://localhost:9191/ws");
         return template;
     }
 
