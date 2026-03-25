@@ -1,14 +1,15 @@
 
 package com.example.producer.endpoint;
 
+import java.math.BigDecimal;
+
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
+
 import com.example.producer.model.frete.CalcularFreteRequest;
 import com.example.producer.model.frete.CalcularFreteResponse;
-
-import java.math.BigDecimal;
 
 @Endpoint
 public class FreteEndpoint {

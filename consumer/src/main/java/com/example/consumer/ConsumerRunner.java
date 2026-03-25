@@ -1,11 +1,12 @@
 package com.example.consumer;
 
-import com.example.consumer.model.endereco.ConsultarEnderecoResponse;
-import com.example.consumer.model.frete.CalcularFreteResponse;
+import java.math.BigDecimal;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
+import com.example.consumer.model.endereco.ConsultarEnderecoResponse;
+import com.example.consumer.model.frete.CalcularFreteResponse;
 
 @Component
 public class ConsumerRunner implements CommandLineRunner {
