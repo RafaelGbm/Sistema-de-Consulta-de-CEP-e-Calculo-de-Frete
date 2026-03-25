@@ -1,11 +1,8 @@
 package com.example.producer.config;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.ws.server.EndpointInterceptor;
 import org.springframework.ws.server.endpoint.interceptor.PayloadLoggingInterceptor;
-import org.springframework.xml.xsd.SimpleXsdSchema;
 import org.springframework.ws.soap.server.endpoint.interceptor.PayloadValidatingInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +12,6 @@ import java.util.List;
 
 @Configuration
 public class SoapLoggingConfig extends WsConfigurerAdapter {
-    private static final Logger logger = LoggerFactory.getLogger(SoapLoggingConfig.class);
 
     @Override
     public void addInterceptors(List<EndpointInterceptor> interceptors) {
