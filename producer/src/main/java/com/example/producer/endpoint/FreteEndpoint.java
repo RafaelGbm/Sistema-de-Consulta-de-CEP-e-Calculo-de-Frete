@@ -5,8 +5,8 @@ import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
-import com.example.producer.model.CalcularFreteRequest;
-import com.example.producer.model.CalcularFreteResponse;
+import com.example.producer.model.frete.CalcularFreteRequest;
+import com.example.producer.model.frete.CalcularFreteResponse;
 
 import java.math.BigDecimal;
 
@@ -27,7 +27,7 @@ public class FreteEndpoint {
             peso == null || peso.compareTo(BigDecimal.ZERO) <= 0) {
             throw new SoapValidationException("Dados inválidos para cálculo de frete");
         }
-        response.setValor(peso.multiply(new BigDecimal("10.00")));
+        response.setValor(peso.multiply(new BigDecimal("10.00")).setScale(2, java.math.RoundingMode.HALF_UP));
         response.setPrazo(7);
         return response;
     }

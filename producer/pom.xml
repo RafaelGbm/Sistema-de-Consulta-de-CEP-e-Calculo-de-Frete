@@ -53,16 +53,31 @@
                 <version>0.14.0</version>
                 <executions>
                     <execution>
-                        <id>generate</id>
+                        <id>generate-endereco</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
                         <configuration>
                             <schemaDirectory>src/main/resources/xsd</schemaDirectory>
-                            <includes>
-                                <include>*.xsd</include>
-                            </includes>
-                            <generatePackage>com.example.producer.model</generatePackage>
+                            <schemaIncludes>
+                                <include>endereco.xsd</include>
+                            </schemaIncludes>
+                            <generatePackage>com.example.producer.model.endereco</generatePackage>
+                            <generateDirectory>${project.build.directory}/generated-sources/xjc-endereco</generateDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-frete</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <schemaDirectory>src/main/resources/xsd</schemaDirectory>
+                            <schemaIncludes>
+                                <include>frete.xsd</include>
+                            </schemaIncludes>
+                            <generatePackage>com.example.producer.model.frete</generatePackage>
+                            <generateDirectory>${project.build.directory}/generated-sources/xjc-frete</generateDirectory>
                         </configuration>
                     </execution>
                 </executions>
@@ -80,7 +95,8 @@
                         </goals>
                         <configuration>
                             <sources>
-                                <source>target/generated-sources/xjc</source>
+                                <source>${project.build.directory}/generated-sources/xjc-endereco</source>
+                                <source>${project.build.directory}/generated-sources/xjc-frete</source>
                             </sources>
                         </configuration>
                     </execution>

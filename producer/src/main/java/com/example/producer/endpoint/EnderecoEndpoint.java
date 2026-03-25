@@ -5,8 +5,8 @@ import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
-import com.example.producer.model.ConsultarEnderecoRequest;
-import com.example.producer.model.ConsultarEnderecoResponse;
+import com.example.producer.model.endereco.ConsultarEnderecoRequest;
+import com.example.producer.model.endereco.ConsultarEnderecoResponse;
 
 @Endpoint
 public class EnderecoEndpoint {

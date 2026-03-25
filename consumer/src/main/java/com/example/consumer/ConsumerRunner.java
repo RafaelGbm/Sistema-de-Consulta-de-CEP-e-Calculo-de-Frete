@@ -1,23 +1,40 @@
 package com.example.consumer;
 
-import com.example.consumer.SoapClient;
-import com.example.consumer.wsdl.ConsultaEnderecoResponse;
-import com.example.consumer.wsdl.CalculaFreteResponse;
+import com.example.consumer.model.endereco.ConsultarEnderecoResponse;
+import com.example.consumer.model.frete.CalcularFreteResponse;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
-public class ConsumerRunner {
-    public static void main(String[] args) {
-        SoapClient client = new SoapClient();
+import java.math.BigDecimal;
 
-        // Exemplo de consulta de endereço
-        String cep = "01001-000";
-        ConsultaEnderecoResponse enderecoResponse = client.consultarEndereco(cep);
-        System.out.println("Endereço para CEP " + cep + ": " + enderecoResponse.getLogradouro() + ", " + enderecoResponse.getBairro() + ", " + enderecoResponse.getCidade() + " - " + enderecoResponse.getUf());
+@Component
+public class ConsumerRunner implements CommandLineRunner {
 
-        // Exemplo de cálculo de frete
-        String cepOrigem = "01001-000";
-        String cepDestino = "20040-010";
-        double peso = 2.5;
-        CalculaFreteResponse freteResponse = client.calcularFrete(cepOrigem, cepDestino, peso);
-        System.out.println("Frete de " + cepOrigem + " para " + cepDestino + " (" + peso + "kg): R$ " + freteResponse.getValor() + ", prazo: " + freteResponse.getPrazoEntrega() + " dias");
+    private final SoapClient soapClient;
+
+    public ConsumerRunner(SoapClient soapClient) {
+        this.soapClient = soapClient;
+    }
+
+    @Override
+    public void run(String... args) {
+        // Exemplo de consulta de endereco
+        String cep = "01001000";
+        System.out.println("=== Consultando endereco para CEP: " + cep + " ===");
+        ConsultarEnderecoResponse enderecoResponse = soapClient.consultarEndereco(cep);
+        System.out.println("Logradouro: " + enderecoResponse.getLogradouro());
+        System.out.println("Bairro: " + enderecoResponse.getBairro());
+        System.out.println("Cidade: " + enderecoResponse.getCidade());
+        System.out.println("UF: " + enderecoResponse.getUf());
+
+        // Exemplo de calculo de frete
+        String cepOrigem = "01001000";
+        String cepDestino = "20040010";
+        BigDecimal peso = new BigDecimal("2.5");
+        System.out.println("\n=== Calculando frete ===");
+        System.out.println("Origem: " + cepOrigem + " | Destino: " + cepDestino + " | Peso: " + peso + "kg");
+        CalcularFreteResponse freteResponse = soapClient.calcularFrete(cepOrigem, cepDestino, peso);
+        System.out.println("Valor: R$ " + freteResponse.getValor());
+        System.out.println("Prazo: " + freteResponse.getPrazo() + " dias");
     }
 }

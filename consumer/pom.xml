@@ -18,11 +18,6 @@
         <java.version>11</java.version>
     </properties>
     <dependencies>
-                <dependency>
-                    <groupId>javax.jws</groupId>
-                    <artifactId>javax.jws-api</artifactId>
-                    <version>1.1</version>
-                </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web-services</artifactId>
@@ -48,29 +43,56 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.1.0</version>
-                <configuration>
-                    <mainClass>com.example.consumer.ConsumerRunner</mainClass>
-                </configuration>
+                <groupId>org.jvnet.jaxb2.maven2</groupId>
+                <artifactId>maven-jaxb2-plugin</artifactId>
+                <version>0.14.0</version>
+                <executions>
+                    <execution>
+                        <id>generate-endereco</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <schemaDirectory>src/main/resources/xsd</schemaDirectory>
+                            <schemaIncludes>
+                                <include>endereco.xsd</include>
+                            </schemaIncludes>
+                            <generatePackage>com.example.consumer.model.endereco</generatePackage>
+                            <generateDirectory>${project.build.directory}/generated-sources/xjc-endereco</generateDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-frete</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <schemaDirectory>src/main/resources/xsd</schemaDirectory>
+                            <schemaIncludes>
+                                <include>frete.xsd</include>
+                            </schemaIncludes>
+                            <generatePackage>com.example.consumer.model.frete</generatePackage>
+                            <generateDirectory>${project.build.directory}/generated-sources/xjc-frete</generateDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
-                <artifactId>jaxws-maven-plugin</artifactId>
-                <version>2.6</version>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.2.0</version>
                 <executions>
                     <execution>
-                        <id>wsimport-endereco</id>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
                         <goals>
-                            <goal>wsimport</goal>
+                            <goal>add-source</goal>
                         </goals>
                         <configuration>
-                            <wsdlUrls>
-                                <wsdlUrl>http://localhost:8080/ws/endereco.wsdl</wsdlUrl>
-                                <wsdlUrl>http://localhost:8080/ws/frete.wsdl</wsdlUrl>
-                            </wsdlUrls>
-                            <packageName>com.example.consumer.wsdl</packageName>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/xjc-endereco</source>
+                                <source>${project.build.directory}/generated-sources/xjc-frete</source>
+                            </sources>
                         </configuration>
                     </execution>
                 </executions>
