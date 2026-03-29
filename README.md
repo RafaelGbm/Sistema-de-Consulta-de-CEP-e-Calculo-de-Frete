@@ -1,3 +1,11 @@
+## Nomes e RM’S
+
+Vinicius Monteiro Araújo - 55508<br>
+Guilherme Almeida - 555180<br>
+Rafael Duarte de Freitas - 558644<br>
+Rafael Gaspar Bragança Martins - 557228<br>
+Luiz Gustavo da Silva - 558358<br>
+
 # Sistema de Consulta de CEP e Cálculo de Frete
 
 Sistema de Web Services **SOAP** construído com **Spring Boot**, seguindo a arquitetura **Producer/Consumer**. O projeto demonstra como criar e consumir serviços SOAP, utilizando contratos XSD, geração automática de classes via JAXB e validação de mensagens XML.
@@ -22,11 +30,13 @@ O **Producer** é o servidor SOAP — expõe dois serviços no endpoint `/ws`. O
 ## Funcionalidades
 
 ### Consulta de Endereço por CEP
+
 - **Entrada:** CEP (8 dígitos)
 - **Saída:** logradouro, bairro, cidade e UF
 - **Validação:** formato obrigatório de 8 dígitos numéricos
 
 ### Cálculo de Frete
+
 - **Entrada:** CEP de origem, CEP de destino e peso (em kg)
 - **Saída:** valor do frete (peso × R$ 10,00) e prazo (7 dias fixos)
 - **Validação:** CEPs com 8 dígitos e peso maior que zero
@@ -59,6 +69,7 @@ mvn spring-boot:run
 Serviço disponível em: `http://localhost:9090/ws`
 
 WSDLs disponíveis em:
+
 - `http://localhost:9090/ws/endereco.wsdl`
 - `http://localhost:9090/ws/frete.wsdl`
 
@@ -71,6 +82,7 @@ mvn spring-boot:run
 ```
 
 Ao iniciar, o Consumer executa automaticamente dois exemplos:
+
 1. Consulta o endereço do CEP `01001000`
 2. Calcula o frete de `01001000` (SP) para `20040010` (RJ) com 2,5 kg
 
