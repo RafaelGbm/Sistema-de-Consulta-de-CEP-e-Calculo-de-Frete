@@ -1,13 +1,54 @@
 # Sistema de Consulta de CEP e Cálculo de Frete
 
-Este repositório contém dois projetos Spring Boot:
+Sistema de Web Services **SOAP** construído com **Spring Boot**, seguindo a arquitetura **Producer/Consumer**. O projeto demonstra como criar e consumir serviços SOAP, utilizando contratos XSD, geração automática de classes via JAXB e validação de mensagens XML.
 
-- **Producer**: Serviço SOAP que fornece consulta de endereço por CEP e cálculo de frete.
-- **Consumer**: Cliente SOAP que consome os serviços do Producer.
+---
+
+## Arquitetura
+
+```
+Consumer (porta 8081)          Producer (porta 9090)
+        |                               |
+        |------- SOAP over HTTP ------->|
+        |     (XML serializado via      |
+        |          JAXB)                |
+        |<------ Resposta XML ----------|
+```
+
+O **Producer** é o servidor SOAP — expõe dois serviços no endpoint `/ws`. O **Consumer** é o cliente — ao iniciar, chama o Producer automaticamente e imprime os resultados no console.
+
+---
+
+## Funcionalidades
+
+### Consulta de Endereço por CEP
+- **Entrada:** CEP (8 dígitos)
+- **Saída:** logradouro, bairro, cidade e UF
+- **Validação:** formato obrigatório de 8 dígitos numéricos
+
+### Cálculo de Frete
+- **Entrada:** CEP de origem, CEP de destino e peso (em kg)
+- **Saída:** valor do frete (peso × R$ 10,00) e prazo (7 dias fixos)
+- **Validação:** CEPs com 8 dígitos e peso maior que zero
+
+Erros de validação retornam um **SOAP Fault** ao cliente, seguindo o padrão do protocolo.
+
+---
+
+## Tecnologias
+
+- Java 11+
+- Spring Boot 2.7
+- Spring Web Services (SOAP)
+- JAXB2 — geração automática de classes Java a partir dos esquemas XSD
+- WSDL — contrato do serviço gerado automaticamente pelo Spring
+- Maven 3.6+
+
+---
 
 ## Como rodar
 
-### 1. Producer (serviço SOAP)
+### 1. Producer (servidor SOAP)
 
 ```bash
 cd producer
@@ -15,7 +56,11 @@ mvn clean install
 mvn spring-boot:run
 ```
 
-O serviço ficará disponível em http://localhost:8080/ws
+Serviço disponível em: `http://localhost:9090/ws`
+
+WSDLs disponíveis em:
+- `http://localhost:9090/ws/endereco.wsdl`
+- `http://localhost:9090/ws/frete.wsdl`
 
 ### 2. Consumer (cliente SOAP)
 
@@ -25,14 +70,33 @@ mvn clean install
 mvn spring-boot:run
 ```
 
-O Consumer executa exemplos de consulta de endereço e cálculo de frete ao iniciar.
+Ao iniciar, o Consumer executa automaticamente dois exemplos:
+1. Consulta o endereço do CEP `01001000`
+2. Calcula o frete de `01001000` (SP) para `20040010` (RJ) com 2,5 kg
 
-## Funcionalidades
+Os resultados são impressos no console.
 
-- Consulta de endereço por CEP
-- Cálculo de frete entre dois CEPs
+---
 
-## Requisitos
+## Estrutura do Projeto
 
-- Java 11+
-- Maven 3.6+
+```
+├── producer/
+│   ├── src/main/java/com/example/producer/
+│   │   ├── endpoint/          # EnderecoEndpoint, FreteEndpoint
+│   │   └── config/            # WebServiceConfig, SoapLoggingConfig
+│   └── src/main/resources/
+│       └── xsd/               # endereco.xsd, frete.xsd (contratos)
+│
+└── consumer/
+    ├── src/main/java/com/example/consumer/
+    │   ├── SoapClient.java    # Lógica de chamada SOAP
+    │   ├── ConsumerRunner.java # Executa os exemplos ao iniciar
+    │   └── config/            # SoapClientConfig
+    └── src/main/resources/
+        └── xsd/               # Mesmos XSDs do producer
+```
+
+---
+
+Para dúvidas ou sugestões, abra uma issue.
